@@ -189,6 +189,8 @@ for i in range(len(latitudes)):
     z_vals.append(z)
 
 # Setup figure
+plt.style.use('dark_background')
+
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
 ax.set_title(f"3D Orbit Animation of {name}")
@@ -198,7 +200,8 @@ u, v = np.mgrid[0:2*np.pi:100j, 0:np.pi:50j]
 earth_x = earth_radius_km * np.cos(u) * np.sin(v)
 earth_y = earth_radius_km * np.sin(u) * np.sin(v)
 earth_z = earth_radius_km * np.cos(v)
-ax.plot_surface(earth_x, earth_y, earth_z, rstride=4, cstride=4, color='deepskyblue', edgecolor='gray', linewidth=0.3, alpha=1.0)
+ax.plot_surface(earth_x, earth_y, earth_z, rstride=4, cstride=4, color='midnightblue', edgecolor='gray', linewidth=0.3, alpha=1.0)
+
 
 # Axis limits and labels
 limit = max(x_vals + y_vals + z_vals, key=abs)
@@ -209,20 +212,27 @@ ax.set_xlabel("X (km)")
 ax.set_ylabel("Y (km)")
 ax.set_zlabel("Z (km)")
 
-# Initial satellite point
-satellite_dot, = ax.plot([], [], [], 'ro', markersize=4)
 
-
-
+# Initial satellite point and trail line
+satellite_dot, = ax.plot([], [], [], 'ro', markersize=4, label='Satellite')
+trail_line, = ax.plot([], [], [], color='red', linewidth=1, label='Trail')
 
 def update(frame):
+    # Update the satellite dot
     satellite_dot.set_data([x_vals[frame]], [y_vals[frame]])
     satellite_dot.set_3d_properties([z_vals[frame]])
-    return satellite_dot,
+    
+    # Update the trail (path so far)
+    trail_line.set_data(x_vals[:frame+1], y_vals[:frame+1])
+    trail_line.set_3d_properties(z_vals[:frame+1])
+    
+    return satellite_dot, trail_line
+
 
 
 # Animate!
 ani = FuncAnimation(fig, update, frames=len(x_vals), interval=100, blit=True)
+
 
 # Show animation
 plt.show()
