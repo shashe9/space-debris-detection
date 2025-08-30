@@ -1,0 +1,19 @@
+# Ignore virtual environment
+venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+
+# Ignoring specific generated CSVs (simulation outputs)
+data/all_satellite_orbits.csv
+data/satellite_orbit_track.csv
+
+# later on more csv can be listed
+
+# If needed, ignore logs or temp files
+*.log
+*.tmp
