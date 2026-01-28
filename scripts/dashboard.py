@@ -1,5 +1,5 @@
 import streamlit as st
-import pandas as pd
+import pandas as pd 
 import plotly.express as px
 import numpy as np
 
@@ -9,7 +9,8 @@ st.set_page_config(page_title="Satellite Collision Risk Dashboard", layout="wide
 # === Load Data ===
 # Robust read with parse_dates; if something goes wrong, fail gracefully.
 try:
-    df = pd.read_csv("../data/persistent_risks.csv", parse_dates=["Timestamp"])
+    df = pd.read_csv("data/persistent_risks.csv", parse_dates=["Timestamp"])
+
 except Exception as e:
     st.error(f"Failed to read CSV: {e}")
     df = pd.DataFrame(
