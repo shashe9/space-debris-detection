@@ -11,7 +11,7 @@ metadata_path = "../data/starlink_metadata.csv"
 df = pd.read_csv(metadata_path)
 
 # For testing purposes, we limit the dataset to the first 100 entries
-df = df.head(1000)
+# df = df.head(1000)
 
 # === Step 2: Load Skyfield time system ===
 ts = load.timescale()
